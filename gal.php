@@ -1,6 +1,6 @@
 <style>
     body {
-        background-image: url(https://hottisbikes.de/_themes/slate/background_slate.gif);
+        background-image: url(background.gif);
         color: white;
     }
 

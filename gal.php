@@ -22,7 +22,7 @@
         padding: 5px;
         text-decoration: none;
         color: white;
-	cursor: pointer;
+        cursor: pointer;
     }
 
     .swipe {
@@ -51,7 +51,7 @@
     .hidden {
         display: none;
     }
-    
+
     .modal {
         position: absolute;
         top: 0;
@@ -108,7 +108,7 @@
         justify-content: center;
         align-items: center;
         border: 1px solid white;
-	font-weight: bold;
+        font-weight: bold;
         background-color: rgba(255, 255, 255, 0.5);
     }
 
@@ -125,22 +125,22 @@
     function showImage(index) {
         document.querySelector('.modal').classList.remove('hidden');
         window.detailSwipe.setup({draggable: true});
-	window.detailSwipe.slide(index, 0);
+        window.detailSwipe.slide(index, 0);
     }
     function closeModal() {
-	document.querySelector('.modal').classList.add('hidden');
+      document.querySelector('.modal').classList.add('hidden');
     }
     document.onkeydown = function(evt) {
-	evt = evt || window.event;
-	var isEscape = false;
-	if ("key" in evt) {
-	    isEscape = (evt.key === "Escape" || evt.key === "Esc");
-	} else {
-	    isEscape = (evt.keyCode === 27);
-	}
-	if (isEscape) {
-	    closeModal(); 
-	}
+      evt = evt || window.event;
+      var isEscape = false;
+      if ("key" in evt) {
+        isEscape = (evt.key === "Escape" || evt.key === "Esc");
+      } else {
+        isEscape = (evt.keyCode === 27);
+      }
+      if (isEscape) {
+        closeModal(); 
+      }
     };
     document.addEventListener("DOMContentLoaded", function() {
         var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
@@ -155,14 +155,14 @@
                         lazyImageObserver.unobserve(lazyImage);
                     }
                 });
-	    }, {
+            }, {
                 rootMargin: '200px'
-	    });
+            });
 
             lazyImages.forEach(function(lazyImage) {
                 lazyImageObserver.observe(lazyImage);
             });
-	}
+        }
     });
 </script>
 <?php
@@ -175,7 +175,7 @@
     } else {
        $gal = "";
     }
-    
+
     $dirname = "img/".$gal;
     $images = scandir($dirname);
     $ignore = Array(".", "..");
@@ -185,17 +185,17 @@
     $index = 0;
     foreach ($images as $curimg){
         if (!in_array($curimg, $ignore)) {
-	    if (!is_dir($dirname.$curimg)) {
-	        if (isImage($dirname.$curimg)) {
+            if (!is_dir($dirname.$curimg)) {
+                if (isImage($dirname.$curimg)) {
                     echo "<li><img class='lazy' data-src='img.php?src=".$dirname.$curimg."&w=300&h=200&zc=1' alt='' onclick='showImage(".$index.")' /></li>\n";
-		    $imagesonly[] = $dirname.$curimg;
-		    $index += 1;
-		}
-	    } else {
-		if (first_of_folder($dirname.$curimg)) {
-		    echo "<li><a href='?gal=".$gal.$curimg."'><span>".$curimg."</span><img class='lazy' data-src='img.php?src=".$dirname.$curimg."/".first_of_folder($dirname.$curimg)."&w=300&h=200' alt='' /></a></li>\n";
-		}
-	    }
+                    $imagesonly[] = $dirname.$curimg;
+                    $index += 1;
+                }
+            } else {
+                if (first_of_folder($dirname.$curimg)) {
+                    echo "<li><a href='?gal=".$gal.$curimg."'><span>".$curimg."</span><img class='lazy' data-src='img.php?src=".$dirname.$curimg."/".first_of_folder($dirname.$curimg)."&w=300&h=200' alt='' /></a></li>\n";
+                }
+            }
         }
     }
     echo "</ul>\n";
@@ -209,25 +209,25 @@
             echo "<div><img data-src='img.php?src=".$image."&w=800&h=600&zc=1' class='lazy img-responsive' /></div>";
         }
         echo "</div></div></div>";
-	echo "<script>window.detailSwipe = new Swipe(document.querySelector('.swipe'), {draggable: true});</script>";
+        echo "<script>window.detailSwipe = new Swipe(document.querySelector('.swipe'), {draggable: true});</script>";
     }
 
     function isImage($img) {
         if (strpos(mime_content_type($img), 'image') !== false) {
-	    return True;
-	} else {
-	    return False;
-	}
+            return True;
+        } else {
+            return False;
+        }
     }
 
     function first_of_folder($folder) {
         $images = scandir($folder);
-	$ignore = Array(".", "..");
-	foreach ($images as $img) {
-	    if (!in_array($img, $ignore) && !is_dir($img) && isImage($folder.'/'.$img)) {
-		return $img;
-	    }
-	}
-	return False;
+        $ignore = Array(".", "..");
+        foreach ($images as $img) {
+            if (!in_array($img, $ignore) && !is_dir($img) && isImage($folder.'/'.$img)) {
+                return $img;
+            }
+        }
+        return False;
     }
 ?>

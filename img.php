@@ -890,6 +890,14 @@ if (!class_exists('mthumb')) : /**
 			$origin_x = 0;
 			$origin_y = 0;
 
+            // Check if new w/h smaller than original (prevent upscaling)
+            if ($width < $new_width) {
+                $new_width = $width;
+            }
+            if ($height < $new_height) {
+                $new_height = $height;
+            }
+
 			// generate new w/h if not provided
 			if ($new_width && !$new_height) {
 				$new_height = floor($height * ($new_width / $width));
